@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.URL;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -16,6 +17,7 @@ import java.time.LocalDateTime;
 @Builder
 public class UserDTO
 {
+    private Long id;
     @NotEmpty
     @Pattern(regexp = "^[a-zA-Z0-9_@-]{1,16}$")
     private String username;
@@ -25,7 +27,9 @@ public class UserDTO
     private String nickname;
     @Email
     private String email;
+    @URL
     private String userPic;
+    private String sex;
     private LocalDateTime updateTime;
 
 }

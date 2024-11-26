@@ -3,6 +3,13 @@ online-chat-system:
     host: localhost
     port: 3306
     username: root
-    password: CHEN003325
+    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
     database: online_chat_system
+
+  alioss:
+    endpoint:
+    access-key-id:
+    access-key-secret:
+    bucket-name:
+    region:

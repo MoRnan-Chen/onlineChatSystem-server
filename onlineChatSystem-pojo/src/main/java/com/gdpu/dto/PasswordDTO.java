@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PasswordDTO
 {
-    @NotEmpty
     private String username;
     @Pattern(regexp = "^[a-zA-Z0-9@]{6,16}$")
     private String oldPassword;

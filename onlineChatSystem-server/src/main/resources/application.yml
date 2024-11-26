@@ -43,4 +43,12 @@ knife4j:
         api-rule-resources:
           - com.gdpu.controller
 
+online-chat-system:
+  alioss:
+    endpoint: ${online-chat-system.alioss.endpoint}
+    access-key-id: ${online-chat-system.alioss.access-key-id}
+    access-key-secret: ${online-chat-system.alioss.access-key-secret}
+    bucket-name: ${online-chat-system.alioss.bucket-name}
+    region: ${online-chat-system.alioss.region}
+
 

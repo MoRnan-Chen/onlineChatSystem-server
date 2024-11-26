@@ -21,6 +21,7 @@ public class User
     private String nickname;// 昵称
     private String email;// 邮箱
     private String userPic;// 用户头像
+    private String sex;//用户性别
     private LocalDateTime createTime;// 创建时间
     private LocalDateTime updateTime;// 更新时间
 

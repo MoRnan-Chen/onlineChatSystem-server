@@ -11,9 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserVO
 {
+    private Long id;//用户id
     private String username;// 用户名
-    private String nickname;// 昵称
     private String email;// 邮箱
     private String userPic;// 用户头像
+
+    private String sex;// 用户性别
 
 }

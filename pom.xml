@@ -14,13 +14,14 @@
     </modules>
 
     <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <java.version>17</java.version>
-    <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
-    <mysql.version>8.4.0</mysql.version>
-    <lombok.version>1.18.22</lombok.version>
-    <knife4j.version>4.5.0</knife4j.version>
-  </properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+        <mybatis-plus.version>3.4.3.4</mybatis-plus.version>
+        <mysql.version>8.4.0</mysql.version>
+        <lombok.version>1.18.22</lombok.version>
+        <knife4j.version>4.5.0</knife4j.version>
+        <fastjson.version>2.0.53</fastjson.version>
+    </properties>
 
 
   <groupId>com.gdpu</groupId>
@@ -53,6 +54,12 @@
             <artifactId>knife4j-openapi2-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
+        <!--json工具-->
+        <dependency>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
 
     </dependencies>
   </dependencyManagement>
@@ -70,5 +77,10 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
     </dependency>
+     <!-- websocket起步依赖-->
+      <dependency>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-websocket</artifactId>
+      </dependency>
   </dependencies>
 </project>

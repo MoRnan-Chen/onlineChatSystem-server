@@ -7,12 +7,14 @@ import com.gdpu.result.Result;
 import com.gdpu.service.UserService;
 import com.gdpu.utils.JwtUtil;
 import com.gdpu.utils.UserContext;
+import com.gdpu.vo.SingleMessageVO;
 import com.gdpu.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Pattern;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -98,14 +101,14 @@ public class UserController
       return Result.success(userVO);
   }
 
-  @PutMapping("update")
+  @PutMapping("/update")
   // 更新用户信息
   public Result updateUserInfo(@RequestBody @Validated UserDTO userDTO)
   {
       log.info("更新用户信息");
 
       userService.update(userDTO);
-      return Result.success("修改成功");
+      return Result.success();
   }
   // 更新密码
   @PatchMapping("/updatePwd")
@@ -119,13 +122,44 @@ public class UserController
       }
 
       //判断原密码是否正确
-      String password = userService.findUserByUsername(passwordDTO.getUsername()).getPassword();
+      Map<String,Object>  claims =UserContext.getUser();
+      //根据id查询密码
+      String password = userService.findUserByUsername((String) claims.get("username")).getPassword();
       if (!passwordEncoder.matches(passwordDTO.getOldPassword(),password))
       {
           return Result.error("原密码错误");
       }
 
       userService.updatePwd(passwordDTO);
-      return Result.success("修改成功");
+      return Result.success();
   }
+
+  //更新用户头像
+
+  @PatchMapping("/updateAvatar")
+  public Result updateAvatar(@RequestParam @URL String avatarUrl)
+  {
+      log.info("更新头像");
+      userService.updateAvatar( avatarUrl);
+      return Result.success();
+  }
+
+  @GetMapping("/friendList")
+  public Result getFriendList()
+  {
+      log.info("获取好友列表");
+      ArrayList<UserVO> friendList = userService.getFriendList();
+      return Result.success(friendList);
+  }
+  @GetMapping("/friendChatRecord")
+    public Result getFriendChatRecord(@RequestParam Long myId,@RequestParam Long friendId)
+  {
+      log.info("获取好友聊天记录");
+      log.info("myId:{},friendId:{}",myId,friendId);
+      ArrayList<SingleMessageVO> friendChatRecord = userService.getFriendChatRecord(myId,friendId);
+      return Result.success(friendChatRecord);
+  }
+
 }
+
+
