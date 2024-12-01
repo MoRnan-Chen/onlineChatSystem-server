@@ -8,8 +8,8 @@ online-chat-system:
     database: online_chat_system
 
   alioss:
-    endpoint:
-    access-key-id:
-    access-key-secret:
-    bucket-name:
-    region:
+    endpoint: oss-cn-guangzhou.aliyuncs.com
+    access-key-id: LTAI5tDmzRd9ppJoi1Cy1BVb
+    access-key-secret: YGsHBWuvCAJSFWmXrDoQCEC71ry5Hs
+    bucket-name: online-chat-system
+    region: cn-guangzhou

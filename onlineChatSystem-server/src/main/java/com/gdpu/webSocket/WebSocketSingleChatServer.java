@@ -24,7 +24,7 @@ import java.util.Map;
 public class WebSocketSingleChatServer implements ApplicationContextAware
 {
     // 保存所有用户的session
-    private static Map<Long, Session> sessionMap = new HashMap<>();
+    private static Map<String, Session> sessionMap = new HashMap<>();
 
     // 全局静态变量，保存 ApplicationContext
     private static ApplicationContext applicationContext;
@@ -39,7 +39,7 @@ public class WebSocketSingleChatServer implements ApplicationContextAware
 
 
     @OnOpen
-    public void onOpen(Session session,@PathParam("id") Long id)
+    public void onOpen(Session session,@PathParam("id") String id)
     {
 
         log.info("用户id：{}连接成功",id);
@@ -47,7 +47,7 @@ public class WebSocketSingleChatServer implements ApplicationContextAware
         sessionMap.put(id,session);
     }
     @OnClose
-    public void onClose(@PathParam("id") Long id)
+    public void onClose(@PathParam("id") String id)
     {
         log.info("{}用户退出",id);
         //移出map
