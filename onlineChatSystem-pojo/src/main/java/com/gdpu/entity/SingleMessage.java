@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 
-public class SingleMessage
+public class SingleMessage implements Serializable
 {
     Long id;//信息的唯一标识
     String content;//信息内容

@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService
     public void update(UserDTO userDTO)
     {
         userDTO.setUpdateTime(LocalDateTime.now());
-        Map claim = UserContext.getUser();
-        userDTO.setId(((Number) claim.get("id")).longValue());
+        Long currentId = UserContext.getCurrentId();
+        userDTO.setId(currentId);
         System.out.println(userDTO.getId());
         userMapper.update(userDTO);
     }
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService
         //设置更新时间
         passwordDTO.setUpdateTime(LocalDateTime.now());
         //用于用户名查询
-        passwordDTO.setUsername(((Map)UserContext.getUser()).get("username").toString());
+        passwordDTO.setId(UserContext.getCurrentId());
         //对新密码进行加密
         passwordDTO.setNewPassword(passwordEncoder.encode(passwordDTO.getNewPassword()));
         userMapper.updatePwd(passwordDTO);
@@ -73,14 +73,13 @@ public class UserServiceImpl implements UserService
     //更新用户头像
     public void updateAvatar(String avatarUrl)
     {
-        userMapper.updateAvatar(avatarUrl,((Map)UserContext.getUser()).get("username").toString(),LocalDateTime.now());
+        userMapper.updateAvatar(avatarUrl,UserContext.getCurrentId(),LocalDateTime.now());
     }
 
     //获取好友列表
     public ArrayList<UserVO> getFriendList()
     {
-        Map claim = UserContext.getUser();
-        return userMapper.selectFriendList(((Number) claim.get("id")).longValue());
+        return userMapper.selectFriendList(UserContext.getCurrentId());
     }
 
     //获取好友聊天记录

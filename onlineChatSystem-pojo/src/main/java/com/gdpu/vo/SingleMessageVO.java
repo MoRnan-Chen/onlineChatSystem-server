@@ -3,10 +3,10 @@ package com.gdpu.vo;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 @Data
-@Builder
-public class SingleMessageVO
+public class SingleMessageVO implements Serializable
 {
 
     String content;//信息内容

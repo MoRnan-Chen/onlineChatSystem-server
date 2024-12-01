@@ -9,13 +9,14 @@ import org.hibernate.validator.constraints.URL;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO
+public class UserDTO implements Serializable
 {
     private Long id;
     @NotEmpty

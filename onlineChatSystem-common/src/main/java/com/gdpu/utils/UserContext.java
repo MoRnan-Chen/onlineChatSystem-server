@@ -2,28 +2,17 @@ package com.gdpu.utils;
 
 public class UserContext
 {
-    private static final ThreadLocal tl = new ThreadLocal<>();
+    private static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
 
-    /**
-     * 保存当前登录用户信息到ThreadLocal
-     * @param userId 用户id
-     */
-    public static void setUser(Object userId) {
-        tl.set(userId);
+    public static void setCurrentId(Long id) {
+        threadLocal.set(id);
     }
 
-    /**
-     * 获取当前登录用户信息
-     * @return 用户id
-     */
-    public static <T> T getUser() {
-        return (T)tl.get();
+    public static Long getCurrentId() {
+        return threadLocal.get();
     }
 
-    /**
-     * 移除当前登录用户信息
-     */
-    public static void removeUser(){
-        tl.remove();
+    public static void removeCurrentId() {
+        threadLocal.remove();
     }
 }

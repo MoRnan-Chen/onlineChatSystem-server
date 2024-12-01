@@ -36,4 +36,6 @@ public interface UserService
 
     //往数据库中插入聊天记录
     void insertChatRecord(SingleMessage message);
+
+
 }

@@ -25,7 +25,7 @@ public class LoginInterceptor implements HandlerInterceptor
             log.info("验证token");
             Map<String, Object> claims = JwtUtil.parseToken(token);
 
-            UserContext.setUser(claims);
+            UserContext.setCurrentId(((Number) claims.get("id")).longValue());
             //放行
             return true;
         }
@@ -43,6 +43,6 @@ public class LoginInterceptor implements HandlerInterceptor
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception
     {
-        UserContext.removeUser();
+        UserContext.removeCurrentId();
     }
 }

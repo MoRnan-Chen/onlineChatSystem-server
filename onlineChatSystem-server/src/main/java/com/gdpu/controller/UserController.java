@@ -94,8 +94,8 @@ public class UserController
   {
       log.info("获取用户信息");
 
-      Map claims = UserContext.getUser();
-      User user = userService.findUserByUsername((String) claims.get("username"));
+      Long currentId = UserContext.getCurrentId();
+      User user = userService.findUserById(currentId);
       UserVO userVO = new UserVO();
       BeanUtils.copyProperties(user,userVO);
       return Result.success(userVO);
@@ -121,10 +121,10 @@ public class UserController
           return Result.error("两次密码不一致");
       }
 
-      //判断原密码是否正确
-      Map<String,Object>  claims =UserContext.getUser();
+
       //根据id查询密码
-      String password = userService.findUserByUsername((String) claims.get("username")).getPassword();
+      String password = userService.findUserById(UserContext.getCurrentId()).getPassword();
+      //判断原密码是否正确
       if (!passwordEncoder.matches(passwordDTO.getOldPassword(),password))
       {
           return Result.error("原密码错误");
@@ -143,7 +143,7 @@ public class UserController
       userService.updateAvatar( avatarUrl);
       return Result.success();
   }
-
+    // 获取好友列表
   @GetMapping("/friendList")
   public Result getFriendList()
   {
@@ -151,6 +151,7 @@ public class UserController
       ArrayList<UserVO> friendList = userService.getFriendList();
       return Result.success(friendList);
   }
+  // 获取好友聊天记录
   @GetMapping("/friendChatRecord")
     public Result getFriendChatRecord(@RequestParam Long myId,@RequestParam Long friendId)
   {
@@ -159,6 +160,8 @@ public class UserController
       ArrayList<SingleMessageVO> friendChatRecord = userService.getFriendChatRecord(myId,friendId);
       return Result.success(friendChatRecord);
   }
+
+
 
 }
 

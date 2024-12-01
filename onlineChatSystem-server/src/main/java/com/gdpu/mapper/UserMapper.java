@@ -31,7 +31,7 @@ public interface UserMapper
     void update(UserDTO userDTO);
 
     //更新密码
-    @Update("update user set password = #{newPassword},update_time = #{updateTime} where username = #{username}")
+    @Update("update user set password = #{newPassword},update_time = #{updateTime} where id = #{id}")
     void updatePwd(PasswordDTO passwordDTO);
 
     //根据id查询用户
@@ -40,7 +40,7 @@ public interface UserMapper
 
     //更新头像
     @Update("update user set user_pic = #{avatarUrl},update_time = #{updateTime} where username = #{username}")
-    void updateAvatar(String avatarUrl,String username,LocalDateTime updateTime);
+    void updateAvatar(String avatarUrl,Long id,LocalDateTime updateTime);
 
     //获取好友列表
     @Select("select user.id,user.username,user.email,user.user_pic,user.sex from firend_list,user where firend_list.user_id = #{id} and user.id=firend_list.firend_id")
