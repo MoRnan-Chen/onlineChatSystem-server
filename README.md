@@ -91,7 +91,9 @@ online-chat-system:
     bucket-name: ${online-chat-system.alioss.bucket-name}
     region: ${online-chat-system.alioss.region}
 ```
-
+### 创建数据库
+![输入图片说明](image.png)
+运行online-chat-system.sql语句
 
 #### 使用说明
 
