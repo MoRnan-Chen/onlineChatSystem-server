@@ -94,4 +94,10 @@ public class UserServiceImpl implements UserService
         userMapper.insertChatRecord(message);
     }
 
+    //搜索好友
+    public ArrayList<UserVO> searchUsers(String keyword)
+    {
+        return userMapper.searchUsers(keyword);
+    }
+
 }

@@ -37,5 +37,6 @@ public interface UserService
     //往数据库中插入聊天记录
     void insertChatRecord(SingleMessage message);
 
-
+    //搜索用户
+    ArrayList<UserVO> searchUsers(String keyword);
 }

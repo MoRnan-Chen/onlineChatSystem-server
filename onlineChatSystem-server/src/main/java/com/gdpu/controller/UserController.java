@@ -159,9 +159,17 @@ public class UserController
       log.info("myId:{},friendId:{}",myId,friendId);
       ArrayList<SingleMessageVO> friendChatRecord = userService.getFriendChatRecord(myId,friendId);
       return Result.success(friendChatRecord);
+
   }
 
-
+    //搜索好友
+    @GetMapping("/searchUsers")
+    public Result searchFriend(@RequestParam String keyword)
+    {
+        log.info("搜索用户");
+        ArrayList<UserVO> searchList = userService.searchUsers(keyword);
+        return Result.success(searchList);
+    }
 
 }
 

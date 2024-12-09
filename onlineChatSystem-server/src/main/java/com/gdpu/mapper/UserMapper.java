@@ -53,4 +53,8 @@ public interface UserMapper
     //插入聊天记录
     @Insert("insert into single_message(content,from_id,to_id,type,create_time) values(#{content},#{fromId},#{toId},#{type},#{createTime})")
     void insertChatRecord(SingleMessage message);
+
+    //搜索用户
+    @Select("select id,username,email,user_pic,sex from user where username like concat('%',#{keyword},'%')")
+    ArrayList<UserVO> searchUsers(String keyword);
 }
