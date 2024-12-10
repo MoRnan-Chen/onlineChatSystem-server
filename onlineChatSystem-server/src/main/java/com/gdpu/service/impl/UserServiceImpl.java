@@ -2,6 +2,8 @@ package com.gdpu.service.impl;
 
 import com.gdpu.dto.PasswordDTO;
 import com.gdpu.dto.UserDTO;
+import com.gdpu.entity.AddFriend;
+import com.gdpu.entity.FriendList;
 import com.gdpu.entity.SingleMessage;
 import com.gdpu.entity.User;
 import com.gdpu.mapper.UserMapper;
@@ -98,6 +100,23 @@ public class UserServiceImpl implements UserService
     public ArrayList<UserVO> searchUsers(String keyword)
     {
         return userMapper.searchUsers(keyword);
+    }
+
+    //添加好友
+    public void addFriend(Long userId)
+    {
+        AddFriend addFriend = AddFriend.builder().fromId(UserContext.getCurrentId())
+                .toId(userId).createTime(LocalDateTime.now()).updateTime(LocalDateTime.now())
+                .build();
+        userMapper.addFriend(addFriend);
+    }
+
+    //查询好友列表
+    public FriendList findFriendList(Long currentId, Long userId)
+    {
+        //查询好友列表
+        FriendList friendList = userMapper.findFriendList(currentId,userId);
+        return friendList;
     }
 
 }

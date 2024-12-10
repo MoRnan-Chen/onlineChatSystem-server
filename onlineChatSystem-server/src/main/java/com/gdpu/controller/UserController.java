@@ -2,6 +2,7 @@ package com.gdpu.controller;
 
 import com.gdpu.dto.PasswordDTO;
 import com.gdpu.dto.UserDTO;
+import com.gdpu.entity.FriendList;
 import com.gdpu.entity.User;
 import com.gdpu.result.Result;
 import com.gdpu.service.UserService;
@@ -171,6 +172,21 @@ public class UserController
         return Result.success(searchList);
     }
 
+    //添加好友
+    @PostMapping("/addFriend")
+    public Result addFriend(@RequestParam Long userId)
+    {
+        log.info("添加好友");
+        log.info("userId:{}",userId);
+        //查询是否已经存在该好友
+        FriendList friendList = userService.findFriendList(UserContext.getCurrentId(),userId);
+        if (friendList!=null)
+        {
+            return Result.error("已添加过该好友");
+        }
+        userService.addFriend(userId);
+        return Result.success();
+    }
 }
 
 

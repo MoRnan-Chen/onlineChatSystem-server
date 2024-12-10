@@ -2,6 +2,7 @@ package com.gdpu.service;
 
 import com.gdpu.dto.PasswordDTO;
 import com.gdpu.dto.UserDTO;
+import com.gdpu.entity.FriendList;
 import com.gdpu.entity.SingleMessage;
 import com.gdpu.entity.User;
 import com.gdpu.vo.SingleMessageVO;
@@ -39,4 +40,10 @@ public interface UserService
 
     //搜索用户
     ArrayList<UserVO> searchUsers(String keyword);
+
+    //添加好友
+    void addFriend(Long userId);
+
+    //查询好友
+    FriendList findFriendList(Long currentId, Long userId);
 }

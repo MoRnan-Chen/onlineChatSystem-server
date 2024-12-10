@@ -3,6 +3,8 @@ package com.gdpu.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.gdpu.dto.PasswordDTO;
 import com.gdpu.dto.UserDTO;
+import com.gdpu.entity.AddFriend;
+import com.gdpu.entity.FriendList;
 import com.gdpu.entity.SingleMessage;
 import com.gdpu.entity.User;
 import com.gdpu.vo.SingleMessageVO;
@@ -57,4 +59,12 @@ public interface UserMapper
     //搜索用户
     @Select("select id,username,email,user_pic,sex from user where username like concat('%',#{keyword},'%')")
     ArrayList<UserVO> searchUsers(String keyword);
+
+    //查询好友关系
+    @Select("select * from firend_list where user_id = #{currentId} and firend_id = #{userId}")
+    FriendList findFriendList(Long currentId, Long userId);
+
+    //添加好友
+    @Insert("insert into add_friend(from_id,to_id,create_time) values(#{fromId},#{toId},#{createTime})")
+    void addFriend(AddFriend addFriend);
 }
