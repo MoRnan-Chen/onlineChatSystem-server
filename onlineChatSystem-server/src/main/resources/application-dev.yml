@@ -1,9 +1,9 @@
 online-chat-system:
   datasource:
-    host: localhost
+    host: 8.134.206.148
     port: 3306
     username: root
-    password: CHEN003325
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     database: online_chat_system
 

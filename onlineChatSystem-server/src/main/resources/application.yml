@@ -9,12 +9,25 @@ spring:
     username: ${online-chat-system.datasource.username}
     password: ${online-chat-system.datasource.password}
     driver-class-name: ${online-chat-system.datasource.driver-class-name}
-
+  hikari:
+    # 数据源连接池配置
+    maximum-pool-size: 20  # 连接池最大连接数
+    minimum-idle: 10       # 连接池中最小空闲连接数
+    idle-timeout: 30000    # 空闲连接的最大存活时间（毫秒）
+    max-lifetime: 600000   # 连接的最大生命周期（毫秒）
+    connection-timeout: 30000  # 获取连接的最大等待时间（毫秒）
+    pool-name: HikariCP     # 连接池名称
+    auto-commit: true       # 默认开启自动提交
+    connection-test-query: SELECT 1  # 测试连接是否可用
+    validation-timeout: 5000  # 验证连接的超时时间
+    leak-detection-threshold: 2000 # 连接泄漏检测的时间阈值（毫秒）
+    read-only: false  # 数据库是否为只读
 
 
 mybatis-plus:
   configuration:
     default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   global-config:
     db-config:
       update-strategy: not_null
