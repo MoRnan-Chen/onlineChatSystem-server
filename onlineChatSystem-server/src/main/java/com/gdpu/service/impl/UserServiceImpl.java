@@ -7,6 +7,7 @@ import com.gdpu.entity.FriendList;
 import com.gdpu.entity.SingleMessage;
 import com.gdpu.entity.User;
 import com.gdpu.mapper.UserMapper;
+import com.gdpu.result.Result;
 import com.gdpu.service.UserService;
 import com.gdpu.utils.UserContext;
 import com.gdpu.vo.SingleMessageVO;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -102,14 +104,7 @@ public class UserServiceImpl implements UserService
         return userMapper.searchUsers(keyword);
     }
 
-    //添加好友
-    public void addFriend(Long userId)
-    {
-        AddFriend addFriend = AddFriend.builder().fromId(UserContext.getCurrentId())
-                .toId(userId).createTime(LocalDateTime.now()).updateTime(LocalDateTime.now())
-                .build();
-        userMapper.addFriend(addFriend);
-    }
+
 
     //查询好友列表
     public FriendList findFriendList(Long currentId, Long userId)
@@ -118,5 +113,43 @@ public class UserServiceImpl implements UserService
         FriendList friendList = userMapper.findFriendList(currentId,userId);
         return friendList;
     }
+    
+    
+    /**
+     * 添加好友到好友列表
+     * @param currentId
+     * @param userId
+     */
+    // Service 实现
+    @Transactional
+    @Override
+    public void addFriendList(Long currentId, Long userId) {
+        // 检查是否已经是好友
+        int existingFriendCount = userMapper.checkFriendExists(currentId, userId);
+        if (existingFriendCount > 0) {
+            throw new RuntimeException("已经是好友");
+        }
+        // 创建添加好友列表记录
+        AddFriend addFriendList = AddFriend.builder()
+                .fromId(currentId)
+                .toId(userId)
+                .createTime(LocalDateTime.now())
+                .build();
+        
+        userMapper.addFriendList(addFriendList);
+        
+        // 创建添加好友申请记录
+        AddFriend addFriend = AddFriend.builder()
+                .fromId(currentId)
+                .toId(userId)
+                .createTime(LocalDateTime.now())
+                .updateTime(LocalDateTime.now())
+                .build();
+        
+        userMapper.addFriend(addFriend);
+    }
+    
+    
+    
 
 }

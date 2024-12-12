@@ -9,10 +9,7 @@ import com.gdpu.entity.SingleMessage;
 import com.gdpu.entity.User;
 import com.gdpu.vo.SingleMessageVO;
 import com.gdpu.vo.UserVO;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -45,7 +42,8 @@ public interface UserMapper
     void updateAvatar(String avatarUrl,Long id,LocalDateTime updateTime);
 
     //获取好友列表
-    @Select("select user.id,user.username,user.email,user.user_pic,user.sex from firend_list,user where firend_list.user_id = #{id} and user.id=firend_list.firend_id")
+    @Select("select user.id,user.username,user.email,user.user_pic,user.sex from friend_list,user where friend_list.user_id = #{id} and user.id=friend_list.friend_id")
+    // 4 5 6 7 9 11
     ArrayList<UserVO> selectFriendList(long id);
 
     //获取好友聊天记录
@@ -61,10 +59,18 @@ public interface UserMapper
     ArrayList<UserVO> searchUsers(String keyword);
 
     //查询好友关系
-    @Select("select * from firend_list where user_id = #{currentId} and firend_id = #{userId}")
+    @Select("select * from friend_list where user_id = #{currentId} and friend_id = #{userId}")
     FriendList findFriendList(Long currentId, Long userId);
+    
 
-    //添加好友
-    @Insert("insert into add_friend(from_id,to_id,create_time) values(#{fromId},#{toId},#{createTime})")
+    @Insert("insert into add_friend(from_id, to_id, create_time, update_time) values(#{fromId}, #{toId}, #{createTime}, #{updateTime})")
     void addFriend(AddFriend addFriend);
+    
+
+    @Insert("insert into friend_list(user_id, friend_id, create_time) values(#{fromId}, #{toId}, #{createTime})")
+    void addFriendList(AddFriend addFriend);
+    
+    // 检查是否已经是好友的方法
+    @Select("SELECT COUNT(*) FROM friend_list WHERE (user_id = #{currentId} AND friend_id = #{userId}) OR (user_id = #{userId} AND friend_id = #{currentId})")
+    int checkFriendExists(@Param("currentId") Long currentId, @Param("userId") Long userId);
 }

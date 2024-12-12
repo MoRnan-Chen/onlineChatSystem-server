@@ -176,15 +176,9 @@ public class UserController
     @PostMapping("/addFriend")
     public Result addFriend(@RequestParam Long userId)
     {
-        log.info("添加好友");
-        log.info("userId:{}",userId);
-        //查询是否已经存在该好友
-        FriendList friendList = userService.findFriendList(UserContext.getCurrentId(),userId);
-        if (friendList!=null)
-        {
-            return Result.error("已添加过该好友");
-        }
-        userService.addFriend(userId);
+        //添加到好友列表
+        userService.addFriendList(UserContext.getCurrentId(),userId);
+        log.info("添加好友成功");
         return Result.success();
     }
 }

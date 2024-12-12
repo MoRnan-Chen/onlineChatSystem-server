@@ -41,9 +41,17 @@ public interface UserService
     //搜索用户
     ArrayList<UserVO> searchUsers(String keyword);
 
-    //添加好友
-    void addFriend(Long userId);
+
+    
 
     //查询好友
     FriendList findFriendList(Long currentId, Long userId);
+    
+    /**
+     * 添加好友到列表
+     * @param currentId
+     * @param userId
+     */
+    void addFriendList(Long currentId, Long userId);
+    
 }
